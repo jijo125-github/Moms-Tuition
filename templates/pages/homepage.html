@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home Page
+{% endblock title %}
+
+{% block content %}
+    <div>
+        <p><b>Welcome to Tution Web App. Here, you can handle students data..</b></p>
+        <p><b>If you are a new user and haven't registered, you can click on Sign Up..</b> <a class = "btn btn-primary btn-sm" href="{% url 'register' %}">Sign Up</a></p>
+        <p><b>If you have already registered, you can click on Login..</b> <a class = "btn btn-primary btn-sm" href="{% url 'login' %}">Login</a></p>
+    </div>
+{% endblock content %}

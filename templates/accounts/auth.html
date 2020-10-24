@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+    Auth page
+{% endblock title %}
+
+{% block content %}
+
+    <div class="col-10 col-md-4 mx-auto">
+        <h2 style = "text-align: center;">{{ title }}</h2>
+        {% include "forms/baseForm.html" with form=form btn_label=btn_label %}
+    </div>
+    
+{% endblock %}
+

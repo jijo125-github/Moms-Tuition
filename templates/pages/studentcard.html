@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}
+    Tution Home Page
+{% endblock title %}
+
+{% block content %}
+    <div class = 'row text-center'>
+        <div class = 'col'>
+            <h4> Students Info </h4>
+        </div>
+    </div>
+    <div class = 'row' id = "students"></div>
+
+    <script>
+
+        function handleDidClickDetailButton(studentid){
+            window.location = `/studentDetail/${studentid}/`
+        }
+
+        function handleDidClickEditButton(studentid){
+            window.location = `/editStudent/${studentid}/`
+        }
+
+        function handleDidClickDeleteButton(studentid){
+            window.location = `/deleteStudent/${studentid}/`
+        }
+
+        function getDetailbutton(studentid){
+            return "<div class = 'btn btn-group'><button class = 'btn btn-success' onclick = handleDidClickDetailButton(" + studentid + ")>Details</button></div>"
+        }
+
+        function getEditbutton(studentid){
+            return "<div class = 'btn btn-group'><button class = 'btn btn-dark' onclick = handleDidClickEditButton(" + studentid + ")>Update</button></div>"
+        }
+
+        function getDeletebutton(studentid){
+            return "<div class = 'btn btn-group'><button class = 'btn btn-danger' onclick = handleDidClickDeleteButton(" + studentid + ")>Delete</button></div>"
+        }
+
+        function getGender(gender){
+            var curgender = gender == 'M' ? 'Male' : 'Female'
+            return "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Gender:</i> " + curgender + "</h6>"
+        }
+
+        function formatStudentDetails(student){
+            var detailformat = "<div class = 'col-12 col-md-10 mx-auto border border-warning rounded py-3 mb-4 student' id='student-"+ student.id +"'>"
+            var curname = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Name:</i> " + student.full_name + "</h6>"
+            var curage = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;''>Age:</i> " + student.age + "</h6>"
+            var curgender = getGender(student.gender)
+            var joiningdate = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Joining Date:</i> " + student.joining_date + "</h6>"
+            var details = detailformat + curname + curage + curgender + joiningdate + getDetailbutton(student.id) + getEditbutton(student.id) + getDeletebutton(student.id) + "</div>"
+            return details 
+        }
+
+        function loadStudentsMiniInfo(studentElement){
+            const xhr = new XMLHttpRequest()
+            const method = "GET"
+            const url = "/GetStudentsInfo"
+            const responseType = "json"
+
+            xhr.responseType = responseType
+            xhr.open(method,url)
+            xhr.onload = function(){
+                console.log(xhr.response)
+                const studentsList = xhr.response
+                var i;
+                var finaldetails = ""
+                for (i=0; i<studentsList.length; i++){
+                    var studentobj = studentsList[i]
+                    var curstudentdetail = formatStudentDetails(studentobj)
+                    finaldetails += curstudentdetail
+                    }
+                    studentElement.innerHTML = finaldetails
+            }
+            xhr.send()
+        }
+
+        const studentsContainerElement = document.getElementById('students')
+        loadStudentsMiniInfo(studentsContainerElement)
+
+    </script>
+{% endblock content %}

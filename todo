@@ -1,0 +1,23 @@
+1. Users  // this we are planning after some other implementation
+    --> Register (done but with traditional django)
+    --> Login (done but with traditional django)
+    --> Logout (done but with traditional django)
+
+2. Students details:  // first implementation
+    --> Add student details (done)
+    --> Edit student details (done)
+    --> delete student if he left the tution. (done)
+
+3. Fees:
+    --> Have students paid their fees or not
+    --> if paid half, how much is left?
+    --> time limit to pay the fees
+    --> if not paid mail them regarding this.
+
+4. Schedule future plans:
+    --> Teachers can create a schedule for their future plans.
+    --> An alert will be done to them either thru message or mail.
+
+5. Exam results:
+    --> They can store the marks in different exams.
+    --> Planning to add some analysis part.

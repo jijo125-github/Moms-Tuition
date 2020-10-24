@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete Student
+{% endblock title %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div class = "form-group">
+        <h4>R u sure u want to delete ???</h4>
+        <form method = "POST">
+            {% csrf_token %}
+            <button type = "submit" class = "btn btn-danger">Delete</button>
+        </form>
+    </div>
+
+{% else %}
+    <p><b>You are not allowed to delete this student.. Please login first !!!</b>
+        <a class = "btn btn-primary btn-sm" href="{% url 'login' %}">Login</a></p>
+{% endif %}
+
+{% endblock %}

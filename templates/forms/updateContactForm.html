@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Update Contact
+{% endblock title %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div class = "form-group">
+        <h2 style = "text-align: center;">Update Contact Form</h2>
+        <form method = "POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type = "submit" class = "btn btn-primary">Save</button>
+        </form>
+    </div>
+
+{% else %}
+    <p><b>You are not allowed to update this contact.. Please login first !!!</b>
+        <a class = "btn btn-primary btn-sm" href="{% url 'login' %}">Login</a></p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- <div class = "row">
+    <div class = "col-md-4 mx-auto col-10">
+        <form class = "form" method="POST" action="">
+            <input type="hidden" value="/" name="next" />
+            <textarea class="form-control" name="Name" placeholder="Your name"></textarea>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div> -->
+
+<div class="container">
+    <h4 class = "text-center">Add Student Info</h4>
+    <form class="form-horizontal" method="POST" action="/postStudent/">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="fname"><b>First Name:</b></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="sname"><b>Middle Name:</b></label>
+        <div class="col-sm-10">          
+          <input type="text" class="form-control" id="mname" placeholder="Enter Middle Name" name="mname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="lname"><b>Last Name:</b></label>
+        <div class="col-sm-10">          
+          <input type="text" class="form-control" id="mname" placeholder="Enter Last Name" name="lname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="age"><b>Age:</b></label>
+        <div class="col-sm-10">          
+          <input type="number" class="form-control" id="age" placeholder="Enter your age" name="age">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="gender"><b>Gender:</b></label>
+        <div class="col-sm-10">    
+          <!-- <select name="gender" placeholder="Gender"><option>Male<option>Female</select>       -->
+          <input type="text" class="form-control" id="gender" placeholder="Type your gender" name="gender">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="standard"><b>Standard:</b></label>
+        <div class="col-sm-10">          
+          <input type="number" class="form-control" id="standard" placeholder="Enter Standard" name="standard">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="house"><b>HouseName:</b></label>
+        <div class="col-sm-10">          
+          <input type="text" class="form-control" id="house" placeholder="Enter house name" name="house">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="society"><b>Society:</b></label>
+        <div class="col-sm-10">          
+          <input type="text" class="form-control" id="society" placeholder="Enter society name" name="society">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="street"><b>Street No:</b></label>
+        <div class="col-sm-10">          
+          <input type="number" class="form-control" id="street" placeholder="Enter street number" name="street">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pin"><b>Pincode:</b></label>
+        <div class="col-sm-10">          
+          <input type="number" class="form-control" id="pin" placeholder="Enter area pincode" name="pin">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="dist"><b>District:</b></label>
+        <div class="col-sm-10">          
+          <input type="text" class="form-control" id="dist" placeholder="Enter district name" name="dist">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="mb1"><b>Mobile 1:</b></label>
+        <div class="col-sm-10">          
+          <input type="number" class="form-control" id="mb1" placeholder="Enter mobile number" name="mb1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="mb2"><b>Mobile 2:</b></label>
+        <div class="col-sm-10">          
+          <input type="number" class="form-control" id="mb2" placeholder="Enter another mobile no" name="mb2">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="emailid"><b>Email:</b></label>
+        <div class="col-sm-10">          
+          <input type="email" class="form-control" id="emailid" placeholder="Enter email id" name="emailid">
+        </div>
+      </div>
+      <div class="form-group">        
+        <div class="control-label col-sm-2">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock content %}
