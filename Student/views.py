@@ -2,13 +2,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse,JsonResponse
 from django.urls import reverse_lazy,reverse
 from django.views.generic import CreateView,UpdateView,DeleteView
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
-from rest_framework import status
 from .models import Student,Contact,Address
-from .serializers import StudentGetSerializer,StudentMiniSerializer
 from .forms import CreateStudentForm,CreateAddressForm,CreateContactForm,UpdateStudentForm,UpdateAddressForm,UpdateContactForm
+from django_filters import FilterSet
+from django_filters import rest_framework as filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
+from rest_framework.filters import SearchFilter,OrderingFilter
+from rest_framework import status
+from .serializers import StudentGetSerializer,StudentMiniSerializer
 
 # Create your views here.
 
@@ -102,7 +106,7 @@ class AddressUpdate(UpdateView):
     model = Address
     form_class = UpdateAddressForm
     template_name = 'forms/updateAddressForm.html'
-    
+
     def get_success_url(self):
         addressId = self.kwargs["pk"]
         student = Address.objects.get(id = addressId).student
@@ -146,7 +150,14 @@ class StudentDelete(DeleteView):
     template_name = 'forms/deleteStudent.html'
     success_url = reverse_lazy('home')
 
-    
+
+def studentDetail(request, id):
+    context = {'studentid':id}
+    return render(request,'pages/studentdetail.html',context)
+
+def addStudentCard(request):
+    return render(request,'pages/studentcard.html')
+
 '''used for testing purpose'''
 def student_list_view(request):
     students = Student.objects.all()
@@ -156,36 +167,6 @@ def student_list_view(request):
     }
     return JsonResponse(data, status = status.HTTP_200_OK)
     
-''' API List View '''
-class GetStudentsMini(APIView):
-
-    def get(self, request):
-        qs = Student.objects.all()
-        if self.request.user.is_authenticated:
-            students = qs.filter(user = self.request.user)
-            serializer = StudentMiniSerializer(students, many = True)
-            return Response(serializer.data, status = status.HTTP_200_OK)
-
-
-class GetStudentDetail(APIView):
-    def get_object(self, id):
-        try:
-            return Student.objects.get(id = id)
-        except Student.DoesNotExist:
-            return Response(status = status.HTTP_404_NOT_FOUND)
-
-    def get(self, request, id):
-        if not self.request.user.is_authenticated:
-            return Response(status = status.HTTP_401_UNAUTHORIZED)    
-        student = self.get_object(id)
-        serializer = StudentGetSerializer(student)
-        return Response(serializer.data, status = status.HTTP_200_OK)
-
-
-def studentDetail(request, id):
-    context = {'studentid':id}
-    return render(request,'pages/studentdetail.html',context)
-
 '''testing purpose'''
 def get_address(request,id):
     student = Student.objects.get(id = id)
@@ -205,7 +186,59 @@ def get_addressid(request,pk):
     addressid = address.id
     print(addressid)
     return JsonResponse({})
+    
 
-def addStudentCard(request):
-    return render(request,'pages/studentcard.html')
+''' API Views '''
+class GetStudentsMini(APIView):
 
+    def get(self, request):
+        qs = Student.objects.all()
+        if self.request.user.is_authenticated:
+            students = qs.filter(user = self.request.user)
+            serializer = StudentMiniSerializer(students, many = True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+
+
+class GetStudentDetail(APIView):
+
+    def get_object(self, id):
+        try:
+            return Student.objects.get(id = id)
+        except Student.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
+        
+    def get(self, request, id):
+        if not self.request.user.is_authenticated:
+            return Response(status = status.HTTP_401_UNAUTHORIZED)    
+        student = self.get_object(id)
+        serializer = StudentGetSerializer(student)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+        
+
+class StudentFilter(FilterSet):
+    gender = filters.CharFilter('gender')
+
+    class Meta:
+        model = Student
+        fields = ('gender',)
+    
+    
+class StudentListViewFilter(ListAPIView):
+
+    ''' Implemented filtering and ordering via ListAPIView '''
+    serializer_class = StudentMiniSerializer
+    filter_backends = (DjangoFilterBackend,OrderingFilter,SearchFilter)
+    filter_class = StudentFilter
+    ordering_fields  = ['firstname', 'age', 'joining_date']
+    search_fields  = ['firstname', 'middlename', 'lastname']
+
+    def get_queryset(self):
+        try:
+            user = self.request.user
+            if user is None:
+                return None
+            queryset = Student.objects.filter(user = user)
+            return queryset
+
+        except: # for the time being
+            print("User does not exist")

@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls import handler404
 from Student import views
 
 urlpatterns = [
@@ -11,8 +10,6 @@ urlpatterns = [
     path('editAddress/<int:pk>/',views.AddressUpdate.as_view(), name = 'updateAddress'),
     path('addContact/',views.ContactCreate.as_view(), name = 'addContact'),
     path('editContact/<int:pk>/',views.ContactUpdate.as_view(), name = 'updateContact'),
-    path('GetStudentsInfo/',views.GetStudentsMini.as_view()),
-    path('GetStudentDetail/<int:id>/',views.GetStudentDetail.as_view()),
     path('studentDetail/<int:id>/',views.studentDetail, name = 'studentDetail'),
     path('deleteStudent/<int:pk>/',views.StudentDelete.as_view(), name = 'deleteStudent'),
     path('addStudentCard/',views.addStudentCard, name = 'StudentCard'),
@@ -22,4 +19,7 @@ urlpatterns = [
     # path('studentMiniInfo/',views.student_list_view),
     # path('testingpurpose/<int:pk>/',views.get_addressid),
     # handler404 = 'my_app.views.page_not_found'
+    path('GetStudentsInfo/',views.GetStudentsMini.as_view()),
+    path('GetStudentDetail/<int:id>/',views.GetStudentDetail.as_view()),
+    path('GetStudentFilterInfo/', views.StudentListViewFilter.as_view(), name = 'filterStudent')
 ]

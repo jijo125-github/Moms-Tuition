@@ -71,7 +71,7 @@
             xhr.responseType = responseType
             xhr.open(method,url)
             xhr.onload = function(){
-                console.log(xhr.response)
+                // console.log(xhr.response)
                 const student = xhr.response
                 if (xhr.status === 200){
                     const answer = studentFullDetail(student)
