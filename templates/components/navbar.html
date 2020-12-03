@@ -27,15 +27,15 @@
               Sort By
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'addStudent' %}">Name [Ascending]</a>
-              <a class="dropdown-item" href="{% url 'addAddress' %}">Name [Descending]</a>
+              <a class="dropdown-item" href="{% url 'SortbyName' %}">Name [Ascending]</a>
+              <a class="dropdown-item" href="{% url 'SortbyAge' %}">Age [Descending]</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Coming Soon..</a>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'filterStudent' %}">Filter</a>
-          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Filter</a>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>

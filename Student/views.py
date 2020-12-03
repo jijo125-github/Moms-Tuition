@@ -166,6 +166,18 @@ def student_list_view(request):
         "response":students_list
     }
     return JsonResponse(data, status = status.HTTP_200_OK)
+
+def filterStudentByName(request):
+    """ testing order by Student name """
+    if not request.user.is_authenticated:
+        return redirect('homenew')
+    return render(request,'pages/testfilterstudentbyname.html')
+
+def filterStudentByAge(request):
+    """ testing order by Student age """
+    if not request.user.is_authenticated:
+        return redirect('homenew')
+    return render(request,'pages/testfilterstudentbyage.html')
     
 '''testing purpose'''
 def get_address(request,id):

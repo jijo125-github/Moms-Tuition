@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Student Table (By Age Descending)
+{% endblock title %}
+
+{% block content %}
+
+  <div class = 'row text-center'>
+    <div class = 'col'>
+        <h5> Students Info</h5>
+    </div>
+  </div>
+  <div class = 'row' id = "studentTable"></div>
+
+  <script>
+
+     function handleDidClickDetailButton(studentid){
+            window.location = `/studentDetail/${studentid}/`
+        }
+
+        function handleDidClickEditButton(studentid){
+            window.location = `/editStudent/${studentid}/`
+        }
+
+        function handleDidClickDeleteButton(studentid){
+            window.location = `/deleteStudent/${studentid}/`
+        }
+
+        function getGender(gender){
+            var curgender = gender == 'M' ? 'Male' : 'Female'
+            return '<td>'+ curgender +'</td>'
+        }
+
+    function formatheaderDetails(){
+      var theader = '<table class="table"><thead style="background-color: beige;>'
+      var tRow = '<tr><th scope="col"></th>'
+      var tId = '<th scope="col">Id</th>'
+      var tName = '<th scope="col">Full Name</th>'
+      var tAge = '<th scope="col">Age</th>'
+      var tGender = '<th scope="col">Gender</th>'
+      var tJD = '<th scope="col">Joining Date</th>'
+      var tDetail = '<th scope="col">Details</th>'
+      var tUpdate = '<th scope="col">Update</th>'
+      var tDelete = '<th scope="col">Delete</th></tr></thead><tbody>'
+      var finalheader = theader + tRow + tId + tName + tAge + tGender + tJD + tDetail + tUpdate + tDelete
+      return finalheader
+    }
+
+    function formatStudentDetails(student){
+      var tbodyId = '<tr><th scope="row">'+ student.id +'</th>'
+      var tbodyName = '<td>'+ student.full_name +'</td>'
+      var tbodyAge = '<td>'+ student.age +'</td>'
+      var tbodyGender = getGender(student.gender)
+      var tbodyJD = '<td>'+ student.joining_date +'</td>'
+      var tbodyDetail = '<td><button class = "btn btn-sm btn-outline-success" onclick = handleDidClickDetailButton(' + student.id + ')>Details</button></td>'
+      var tbodyUpdate = '<td><button class = "btn btn-sm btn-outline-dark" onclick = handleDidClickEditButton(' + student.id + ')>Update</button></td>'
+      var tbodyDelete = '<td><button class = "btn btn-sm btn-outline-danger" onclick = handleDidClickDeleteButton(' + student.id + ')>Delete</button></td></tr>'
+      var final = tbodyId + tbodyName + tbodyAge + tbodyGender + tbodyJD + tbodyDetail + tbodyUpdate + tbodyDelete
+      return final
+    }
+
+    function loadStudentsFilteredInfo(studentElement){
+              const xhr = new XMLHttpRequest()
+              const method = "GET"
+              const url = "/GetStudentFilterInfo/?ordering=-age"
+              const responseType = "json"
+  
+              xhr.responseType = responseType
+              xhr.open(method,url)
+              xhr.onload = function(){
+                  const studentsList = xhr.response
+                  var i;
+                  var headerDetails = formatheaderDetails()
+                  var last = '</tbody></table>'
+                  var finaldetails = ""
+                  for (i=0; i<studentsList.length; i++){
+                      var studentobj = studentsList[i]
+                      var curstudentdetail = formatStudentDetails(studentobj)
+                      finaldetails += curstudentdetail
+                    }
+                    studentElement.innerHTML = headerDetails + finaldetails + last
+            }
+              xhr.send()
+          }
+  
+          const studentsContainerElement = document.getElementById('studentTable')
+          loadStudentsFilteredInfo(studentsContainerElement)
+
+  </script>
+
+{% endblock content %}

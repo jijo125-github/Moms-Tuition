@@ -21,5 +21,7 @@ urlpatterns = [
     # handler404 = 'my_app.views.page_not_found'
     path('GetStudentsInfo/',views.GetStudentsMini.as_view()),
     path('GetStudentDetail/<int:id>/',views.GetStudentDetail.as_view()),
-    path('GetStudentFilterInfo/', views.StudentListViewFilter.as_view(), name = 'filterStudent')
+    path('GetStudentFilterInfo/', views.StudentListViewFilter.as_view(), name = 'filterStudent'),
+    path('GetStudentSortByName/', views.filterStudentByName, name = 'SortbyName'),
+    path('GetStudentSortByAge/', views.filterStudentByAge, name = 'SortbyAge')
 ]
