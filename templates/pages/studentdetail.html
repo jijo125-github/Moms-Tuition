@@ -48,12 +48,14 @@
             var studentaddress = student.student_address[0]
             var housename = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Housename:</i> " + studentaddress.housename + "</h6>"
             var society = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Society:</i> " + studentaddress.society + "</h6>"
+            var streetno = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Street No:</i> " + studentaddress.streetno + "</h6>"
             var pincode = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>Pincode:</i> " + studentaddress.pincode + "</h6>"
             var district = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>District:</i> " + studentaddress.district + "</h6>"
             var studentcontact = student.student_contact[0]
             var email = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>EmailId:</i> " + studentcontact.email + "</h6>"
-            var phoneNo = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>PhoneNo:</i> " + studentcontact.phone + "</h6>"
-            var details = detailstuct + detailformat + curname + curage + curgender + standard + joiningdate + housename + society + pincode + district + email + phoneNo + getEditbutton(student.id) + getDeletebutton(student.id) + "</div>"
+            var phone1 = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>PhoneNo1:</i> " + studentcontact.phone + "</h6>"
+            var phone2 = "<h6 style = 'color: Brown;'><i style = 'color: Darkblue;'>PhoneNo2:</i> " + studentcontact.phone2 + "</h6>"
+            var details = detailstuct + detailformat + curname + curage + curgender + standard + joiningdate + housename + society + streetno + pincode + district + email + phone1 + phone2 + getEditbutton(student.id) + getDeletebutton(student.id) + "</div>"
             return details
         }
 

@@ -179,26 +179,6 @@ def filterStudentByAge(request):
         return redirect('homenew')
     return render(request,'pages/testfilterstudentbyage.html')
     
-'''testing purpose'''
-def get_address(request,id):
-    student = Student.objects.get(id = id)
-    address = student.addresses.first()
-    contact = student.contacts.first()
-    print('Housename is: ',address.housename)
-    print('Society is: ',address.society)
-    print('StreetNo is: ',address.streetno) 
-    print('ContactNo is:',contact.phone)
-    print('ContactNo is:',contact.email)
-    return JsonResponse({}, status = status.HTTP_200_OK)
-    
-'''testing purpose'''
-def get_addressid(request,pk):
-    student = Student.objects.get(id = pk)
-    address = Address.objects.get(student = student)
-    addressid = address.id
-    print(addressid)
-    return JsonResponse({})
-    
 
 ''' API Views '''
 class GetStudentsMini(APIView):
@@ -254,3 +234,4 @@ class StudentListViewFilter(ListAPIView):
 
         except: # for the time being
             print("User does not exist")
+            

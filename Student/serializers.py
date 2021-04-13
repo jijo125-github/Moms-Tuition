@@ -5,13 +5,13 @@ class AddressGetSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Address
-        fields = ['housename','society','pincode','district']
+        fields = ['housename','society','streetno','pincode','district']
 
 class ContactGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ['phone','email']
+        fields = ['phone','phone2','email']
 
 class StudentMiniSerializer(serializers.ModelSerializer):
 
