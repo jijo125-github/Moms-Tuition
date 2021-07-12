@@ -19,6 +19,20 @@ class StudentMiniSerializer(serializers.ModelSerializer):
         model = Student
         fields = ['id','full_name','age','gender','joining_date']
 
+class StudentCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Student
+        fields = ['firstname','middlename','lastname','age','gender','standard']
+    
+    def validate(self, data):
+        if data['age'] < 0:
+            raise serializers.ValidationError({
+                'error':'Age should be greater than 0'
+            })
+        return data
+
+
 class StudentGetSerializer(serializers.ModelSerializer):
     student_address = AddressGetSerializer(many = True)
     student_contact = ContactGetSerializer(many = True)

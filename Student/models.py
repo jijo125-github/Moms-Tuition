@@ -12,7 +12,7 @@ class Student(models.Model):
         ('F', 'Female')
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'students')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name = 'students')
     firstname = models.CharField(max_length = 20)
     middlename = models.CharField(max_length = 20, blank = True, default = '')
     lastname = models.CharField(max_length = 20, blank = True, default = '')
@@ -51,7 +51,7 @@ class Student(models.Model):
     
 
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     student = models.ForeignKey('Student', on_delete = models.CASCADE, related_name = 'addresses')
     housename = models.CharField(max_length = 50, blank = True, default = '')
     society = models.CharField(max_length = 100)
@@ -71,7 +71,7 @@ class Address(models.Model):
         
 
 class Contact(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     student = models.ForeignKey('Student', on_delete = models.CASCADE, related_name = 'contacts')
     phone = models.PositiveIntegerField(validators = [MinValueValidator(8000000000), MaxValueValidator(9999999999)]) 
     phone2 = models.PositiveIntegerField(validators = [MinValueValidator(8000000000), MaxValueValidator(9999999999)])

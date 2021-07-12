@@ -11,8 +11,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework import status
-from .serializers import StudentGetSerializer, StudentMiniSerializer
+from rest_framework import serializers, status
+from .serializers import StudentGetSerializer, StudentMiniSerializer, StudentCreateSerializer
 
 # Create your views here.
 
@@ -173,8 +173,7 @@ def addStudentCard(request):
 
 def student_list_view(request):
     students = Student.objects.all()
-    students_list = [{"name": student.full_name, "age": student.age}
-                     for student in students]
+    students_list = [{"name": student.full_name, "age": student.age} for student in students]
     data = {
         "response": students_list
     }
@@ -198,7 +197,7 @@ def filterStudentByAge(request):
 ''' API Views '''
 
 
-class GetStudentsMini(APIView):
+class StudentsMini(APIView):
 
     def get(self, request):
         qs = Student.objects.all()
@@ -210,6 +209,15 @@ class GetStudentsMini(APIView):
             ''' for react version (upper version not working due to is_authenticated [need to check that]) '''
             serializer = StudentMiniSerializer(qs, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        """ api to create Student details """
+        serializer = StudentCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class GetStudentDetail(APIView):
